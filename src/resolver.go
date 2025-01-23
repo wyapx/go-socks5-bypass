@@ -26,6 +26,10 @@ type DNSResolver struct{}
 //}
 
 func Resolver(name string) (net.IP, error) {
+	ip := net.ParseIP(name)
+	if ip != nil {
+		return ip, nil
+	}
 	client := &http.Client{}
 	resolver := doh.Resolver{
 		"208.67.220.220",

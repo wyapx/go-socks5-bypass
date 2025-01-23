@@ -1,13 +1,13 @@
-package socks5
+package src
 
 import (
+	"encoding/binary"
 	"fmt"
+	"golang.org/x/net/context"
 	"io"
 	"net"
 	"strconv"
 	"strings"
-
-	"golang.org/x/net/context"
 )
 
 const (
@@ -195,6 +195,38 @@ func (s *Server) handleConnect(ctx context.Context, conn conn, req *Request) err
 	bind := AddrSpec{IP: local.IP, Port: local.Port}
 	if err := sendReply(conn, successReply, &bind); err != nil {
 		return fmt.Errorf("Failed to send reply: %v", err)
+	}
+
+	// add more magic
+	fmt.Printf("Successfully connected to %v\n", req.DestAddr)
+
+	if req.DestAddr.Port == 443 {
+		var head [5]byte
+		n, err := req.bufConn.Read(head[:])
+		if err != nil {
+			return err
+		}
+		if head[0] != 0x16 {
+			target.Write(head[:n])
+		} else {
+			//var length = binary.BigEndian.Uint16(head[3:])
+			//var proto = binary.BigEndian.Uint16(head[1:3])
+			//fmt.Printf("%d %d %v 111111\n", proto, length, head[:3])
+
+			var lbuf = make([]byte, 2)
+			for {
+				var buf [200]byte
+				n, err = req.bufConn.Read(buf[:])
+				binary.BigEndian.PutUint16(lbuf, uint16(n))
+
+				target.Write(append(head[:3], lbuf...)) // head
+				target.Write(buf[:n])                   // body
+				//fmt.Println(n)
+				if n != 200 {
+					break
+				}
+			}
+		}
 	}
 
 	// Start proxying

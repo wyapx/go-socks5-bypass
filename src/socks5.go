@@ -1,4 +1,4 @@
-package socks5
+package src
 
 import (
 	"bufio"
@@ -114,7 +114,6 @@ func (s *Server) Serve(l net.Listener) error {
 		}
 		go s.ServeConn(conn)
 	}
-	return nil
 }
 
 // ServeConn is used to serve a single connection.

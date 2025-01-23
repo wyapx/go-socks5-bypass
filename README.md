@@ -1,4 +1,4 @@
-go-socks5 [![Build Status](https://travis-ci.org/armon/go-socks5.png)](https://travis-ci.org/armon/go-socks5)
+go-socks5-bypass
 =========
 
 Provides the `socks5` package that implements a [SOCKS5 server](http://en.wikipedia.org/wiki/SOCKS).
@@ -15,13 +15,7 @@ The package has the following features:
 * Rules to do granular filtering of commands
 * Custom DNS resolution
 * Unit tests
-
-TODO
-====
-
-The package still needs the following:
-* Support for the BIND command
-* Support for the ASSOCIATE command
+* ?
 
 
 Example
@@ -43,3 +37,11 @@ if err := server.ListenAndServe("tcp", "127.0.0.1:8000"); err != nil {
 }
 ```
 
+or, just: `go run main.go`
+
+
+TODO:
+======
+ - [ ] DNS cache
+ - [ ] Better log
+ - [ ] Error Handle

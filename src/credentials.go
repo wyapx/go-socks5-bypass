@@ -1,4 +1,4 @@
-package socks5
+package src
 
 // CredentialStore is used to support user/pass authentication
 type CredentialStore interface {

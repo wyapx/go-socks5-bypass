@@ -6,7 +6,8 @@ import (
 )
 
 func main() {
-	fmt.Println("114514")
+	bindAddr := "0.0.0.0:7900"
+	fmt.Printf("Socks5 server running at %s\n", bindAddr)
 	conf := &socks5.Config{}
 	server, err := socks5.New(conf)
 	if err != nil {
@@ -14,7 +15,7 @@ func main() {
 	}
 
 	// Create SOCKS5 proxy on localhost port 8000
-	if err := server.ListenAndServe("tcp", "127.0.0.1:8000"); err != nil {
+	if err := server.ListenAndServe("tcp", bindAddr); err != nil {
 		panic(err)
 	}
 }

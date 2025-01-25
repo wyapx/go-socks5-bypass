@@ -42,6 +42,6 @@ or, just: `go run main.go`
 
 TODO:
 ======
- - [ ] DNS cache
+ - [x] DNS cache
  - [ ] Better log
  - [ ] Error Handle

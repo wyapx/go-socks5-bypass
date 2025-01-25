@@ -198,7 +198,7 @@ func (s *Server) handleConnect(ctx context.Context, conn conn, req *Request) err
 	}
 
 	// add more magic
-	fmt.Printf("Successfully connected to %v\n", req.DestAddr)
+	s.config.Logger.Printf("Connected to %v\n", req.DestAddr)
 
 	if req.DestAddr.Port == 443 {
 		var head [5]byte
